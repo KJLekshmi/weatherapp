@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    * {
+     margin: 0;
+     padding: 0;
+   }
+ 
+
+   body {
+    position: relative;
+     background-image: linear-gradient(to bottom, #030420, #000000 70%);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 100vw;
+     height: 100vh;
+     overflow: hidden;
+     background-repeat:no-repeat;
+     /* position: relative; */
+   }
+
+
+
+   hr {
+     width: 50px;
+     border-color: transparent;
+     border-right-color: rgba(255, 255, 255, 0.7);
+     border-right-width: 50px;
+     position: absolute;
+     bottom: 100%;
+     transform-origin: 100% 50%;
+     animation-name: rain;
+     animation-duration: 1s;
+     animation-timing-function: linear;
+     animation-iteration-count: infinite;
+   }
+
+   @keyframes rain {
+     from {
+       transform: rotate(105deg) translateX(0);
+     } 
+     to {
+       transform: rotate(105deg) translateX(calc(100vh + 20px));
+     }
+   }
+   .h2{
+    color: rgb(255, 244, 244);
+    font-size: 40px;
+    margin: 22px;;
+   }
+   .textbar{
+    width: 70%;
+    height: 25px;
+    border-radius: 10px;
+   }
+   .hello{
+    height: 25px;
+   }
+   .card{
+    /* position: absolute;
+    margin-top: 20%;
+    margin-left: -70%; */
+    background-image: url(./CARD1);
+    background-repeat:no-repeat;
+    color:white;
+     border-radius: 5%;
+    font-size: 15px; 
+    /* padding-left: 155px; */
+    text-align: center;
+    
+  }
+  /* @media(orientation:portrait){
+    .card{
+      position: absolute;
+      margin-top: 15%;
+      margin-left: 0%;
+    }
+  } */
+
+  
+
+
+  
+
+
+  /* @media (orientation:portrait){
+    .card{
+    /* position: absolute;
+    margin-top: 20%;
+    margin-left: -70%; */
+    /* background-image: url(./CARD1);
+    background-repeat:no-repeat;
+    color:white;
+    border-radius: 5%;
+    font-size: 15px; */
+    /* padding-left: 155px; */
+    /* text-align: center;
+    
+  } */
+/* } */ 
+#main{
+  margin-top: 0px;
+  
+
+}
+
+
+  </style>
+</head>
+
+  <body>
+    <div class="bg-text  container  " id="main">
+        <center>
+            <h3  class="h2 mt-5">How's the Weather?</h3>
+            <div class="input-group mb-3 mt-5">
+                <input  id="cityname" type="text" class="textbar " placeholder="enter location" border-radius:5px  >
+                <button class="btn btn-outline-secondary bg-danger hello" type="button" onclick="search()" id="button-addon2">search</button>
+              </div
+        </center>
+      </div> 
+      <div id="result" class="container w-50 text-center p-2 "></div> 
+</body> 
+<script type="text/javascript">
+
+  let hrElement;
+  let counter = 100;
+  for (let i = 0; i < counter; i++) {
+    hrElement = document.createElement("HR");
+    
+      hrElement.style.left = Math.floor(Math.random() * window.innerWidth) + "px";
+      hrElement.style.animationDuration = 0.2 + Math.random() * 0.3 + "s";
+      hrElement.style.animationDelay = Math.random() * 5 + "s";
+   
+    document.body.appendChild(hrElement);
+  }
+  function search(){
+          city=cityname.value
+          fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=5b4bee0ba241d092159faf007e166080`).then(d=>d.json().then(res=>displayData(res)))
+    }
+    function displayData(weather){
+        cityname=weather.name
+        temp=weather.main.temp
+        main =weather.main
+        humidity=weather.humidity
+        windspeed=weather.windspeed
+        sunrise=weather.sys.sunrise
+        sunset=weather.sys.sunset
+    
+    htmldata=`
+    <div class="card " style="width: 15rem; height:18rem background-color:white color-black">
+  <div class="card-body bg-light  ">
+    <h3 class="card-title">Today's Weather</h3>
+   </div>
+  <ul class="list-group list-none list-group-flush">
+    <p class="list-group-item">City:${cityname}</p>
+    <p class="list-group-item">Humidity:${main.humidity}</p>
+    <p class="list-group-item">Windspeed:${windspeed}</p>
+    <p class="list-group-item">sunrise:${sunrise}</p>
+    <p class="list-group-item">sunset:${sunset}</p>
+  </ul>
+
+</div>`
+result.innerHTML=htmldata}
+ 
+
+</script>
+</html>
